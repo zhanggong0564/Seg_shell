@@ -1,0 +1,66 @@
+epoch 1 loss: 0.0593: 100%|██████████| 69/69 [01:32<00:00,  1.34s/it, class_acc=0.613, fwIou=0.942, mIou=0.425, pixel_acc=0.95]
+validation
+  0%|          | 0/69 [00:00<?, ?it/s]pixel_acc 0.9903899646196209 class_acc 0.6620870674745175 mIou 0.5223201276880951 fwIou 0.9850008119276721 Time: 0:0:6
+epoch 2 loss: 0.0409: 100%|██████████| 69/69 [01:03<00:00,  1.09it/s, class_acc=0.675, fwIou=0.965, mIou=0.484, pixel_acc=0.972]
+validation
+pixel_acc 0.9918293249411662 class_acc 0.7168118719129998 mIou 0.5911498241632942 fwIou 0.9870496412966975 Time: 0:0:2
+epoch 3 loss: 0.0245: 100%|██████████| 69/69 [00:59<00:00,  1.15it/s, class_acc=0.714, fwIou=0.973, mIou=0.523, pixel_acc=0.98]
+validation
+pixel_acc 0.992494510171192 class_acc 0.7542835437440317 mIou 0.6318004999434694 fwIou 0.9880330813450121 Time: 0:0:2
+epoch 4 loss: 0.0174: 100%|██████████| 69/69 [01:01<00:00,  1.13it/s, class_acc=0.742, fwIou=0.978, mIou=0.554, pixel_acc=0.984]
+validation
+pixel_acc 0.9931830734503074 class_acc 0.7833532696053362 mIou 0.661679471236105 fwIou 0.9889671268754587 Time: 0:0:2
+epoch 5 loss: 0.0190: 100%|██████████| 69/69 [01:02<00:00,  1.10it/s, class_acc=0.764, fwIou=0.981, mIou=0.579, pixel_acc=0.986]
+validation
+  0%|          | 0/69 [00:00<?, ?it/s]pixel_acc 0.9934565309618341 class_acc 0.7741306992567467 mIou 0.6619013008082058 fwIou 0.9892621268497132 Time: 0:0:2
+epoch 6 loss: 0.0122: 100%|██████████| 69/69 [01:03<00:00,  1.08it/s, class_acc=0.782, fwIou=0.983, mIou=0.601, pixel_acc=0.988]
+validation
+  0%|          | 0/69 [00:00<?, ?it/s]pixel_acc 0.9936842371205814 class_acc 0.7829134655274682 mIou 0.6712751028972077 fwIou 0.9896329985188184 Time: 0:0:3
+epoch 7 loss: 0.0124: 100%|██████████| 69/69 [01:04<00:00,  1.07it/s, class_acc=0.797, fwIou=0.984, mIou=0.621, pixel_acc=0.989]
+validation
+pixel_acc 0.9937557783283171 class_acc 0.7870380074643525 mIou 0.6738156858325333 fwIou 0.9897996568280905 Time: 0:0:2
+epoch 8 loss: 0.0090: 100%|██████████| 69/69 [01:04<00:00,  1.06it/s, class_acc=0.812, fwIou=0.985, mIou=0.64, pixel_acc=0.99]
+validation
+  0%|          | 0/69 [00:00<?, ?it/s]pixel_acc 0.9939999814893379 class_acc 0.7904287576381162 mIou 0.6810558533144251 fwIou 0.9901060786699676 Time: 0:0:2
+epoch 9 loss: 0.0072: 100%|██████████| 69/69 [01:04<00:00,  1.07it/s, class_acc=0.826, fwIou=0.986, mIou=0.658, pixel_acc=0.991]
+validation
+  0%|          | 0/69 [00:00<?, ?it/s]pixel_acc 0.9941555016244913 class_acc 0.792392325543286 mIou 0.6860241311822798 fwIou 0.9902941577507351 Time: 0:0:2
+epoch 10 loss: 0.0058: 100%|██████████| 69/69 [01:04<00:00,  1.07it/s, class_acc=0.838, fwIou=0.987, mIou=0.673, pixel_acc=0.992]
+validation
+pixel_acc 0.9943428164622823 class_acc 0.7961650890970464 mIou 0.692563335110146 fwIou 0.9905391300512225 Time: 0:0:3
+
+###########448*448尺寸训练log##################
+
+epoch 1 loss: 0.0710: 100%|██████████| 69/69 [00:49<00:00,  1.39it/s, class_acc=0.604, fwIou=0.94, mIou=0.424, pixel_acc=0.948]
+validation
+pixel_acc 0.9900750179041904 class_acc 0.6475080455759087 mIou 0.5065759203075842 fwIou 0.9844282408336094 Time: 0:0:2
+epoch 2 loss: 0.0394: 100%|██████████| 69/69 [01:05<00:00,  1.05it/s, class_acc=0.655, fwIou=0.964, mIou=0.477, pixel_acc=0.971]
+validation
+pixel_acc 0.9913853645005646 class_acc 0.6920975924392767 mIou 0.5663160368837442 fwIou 0.9862583144052691 Time: 0:0:2
+epoch 3 loss: 0.0231: 100%|██████████| 69/69 [00:48<00:00,  1.43it/s, class_acc=0.699, fwIou=0.972, mIou=0.516, pixel_acc=0.979]
+validation
+pixel_acc 0.9923824422186908 class_acc 0.7337659409404566 mIou 0.6155184669768545 fwIou 0.9876857599372992 Time: 0:0:2
+epoch 4 loss: 0.0196: 100%|██████████| 69/69 [00:58<00:00,  1.18it/s, class_acc=0.731, fwIou=0.977, mIou=0.547, pixel_acc=0.983]
+validation
+pixel_acc 0.9929402397005165 class_acc 0.7638099928469404 mIou 0.6444527378123611 fwIou 0.9885433254891633 Time: 0:0:6
+epoch 5 loss: 0.0203: 100%|██████████| 69/69 [00:51<00:00,  1.34it/s, class_acc=0.753, fwIou=0.98, mIou=0.571, pixel_acc=0.986]
+validation
+pixel_acc 0.9932599871403479 class_acc 0.7589319466865591 mIou 0.6487884912771634 fwIou 0.9888954354136434 Time: 0:0:2
+epoch 6 loss: 0.0117: 100%|██████████| 69/69 [00:50<00:00,  1.36it/s, class_acc=0.77, fwIou=0.982, mIou=0.593, pixel_acc=0.988]
+validation
+pixel_acc 0.9936278126132625 class_acc 0.7691516479483439 mIou 0.6641088714018962 fwIou 0.9893883637110485 Time: 0:0:2
+epoch 7 loss: 0.0112: 100%|██████████| 69/69 [00:51<00:00,  1.33it/s, class_acc=0.788, fwIou=0.984, mIou=0.613, pixel_acc=0.989]
+validation
+pixel_acc 0.9939314666239008 class_acc 0.7804505065136049 mIou 0.6768419284206364 fwIou 0.9898244441855782 Time: 0:0:2
+epoch 8 loss: 0.0145: 100%|██████████| 69/69 [00:52<00:00,  1.31it/s, class_acc=0.803, fwIou=0.985, mIou=0.631, pixel_acc=0.99]
+validation
+pixel_acc 0.994166333685754 class_acc 0.7881916586813814 mIou 0.6868673284033013 fwIou 0.9901555037014608 Time: 0:0:2
+epoch 9 loss: 0.0071: 100%|██████████| 69/69 [00:52<00:00,  1.31it/s, class_acc=0.815, fwIou=0.986, mIou=0.647, pixel_acc=0.991]
+validation
+pixel_acc 0.9943868892972147 class_acc 0.796497412460417 mIou 0.6973397909618232 fwIou 0.9904650867701473 Time: 0:0:2
+epoch 10 loss: 0.0093: 100%|██████████| 69/69 [00:53<00:00,  1.29it/s, class_acc=0.825, fwIou=0.987, mIou=0.661, pixel_acc=0.992]
+validation
+pixel_acc 0.9944286847999958 class_acc 0.7926386750849609 mIou 0.695668294784169 fwIou 0.9905102476578629 Time: 0:0:2
+
+
+
