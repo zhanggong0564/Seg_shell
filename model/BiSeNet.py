@@ -69,7 +69,7 @@ class AttentionRefinementModule(torch.nn.Module):
     def forward(self, input):
         # global average pooling
         x = self.avgpool(input)
-        assert self.in_channels == x.size(1), 'in_channels and out_channels should all be {}'.format(x.size(1))
+        # assert self.in_channels == x.size(1), 'in_channels and out_channels should all be {}'.format(x.size(1))
         x = self.conv(x)
         x = self.sigmoid(x)
         x = torch.mul(input, x)
@@ -90,7 +90,7 @@ class FeatureFusionModule(torch.nn.Module):
 
     def forward(self, input_1, input_2):
         x = torch.cat((input_1, input_2), dim=1)
-        assert self.in_channels == x.size(1), 'in_channels of ConvBlock should be {}'.format(x.size(1))
+        # assert self.in_channels == x.size(1), 'in_channels of ConvBlock should be {}'.format(x.size(1))
         feature = self.convblock(x)
         x = self.avgpool(feature)
 
@@ -102,7 +102,7 @@ class FeatureFusionModule(torch.nn.Module):
 
 
 class BiSeNet(torch.nn.Module):
-    def __init__(self, num_classes):
+    def __init__(self, num_classes,mode=None):
         super().__init__()
         self.saptial_path = Spatial_path()
         self.context_path = resnet18(pretrained=True)
@@ -116,6 +116,8 @@ class BiSeNet(torch.nn.Module):
         self.feature_fusion_module = FeatureFusionModule(num_classes, 1024)
 
         self.conv = nn.Conv2d(in_channels=num_classes, out_channels=num_classes, kernel_size=1)
+        self.mode = mode
+        self.num_classes = num_classes
 
     def forward(self, input):
         input_size = [int(input.shape[2]),int(input.shape[3])]
@@ -132,7 +134,7 @@ class BiSeNet(torch.nn.Module):
         cx2 = torch.nn.functional.interpolate(cx2, size=sp_size, mode='bilinear')
         cx = torch.cat((cx1, cx2), dim=1)
 
-        if self.training == True:
+        if self.training:
             cx1_sup = self.supervision1(cx1)
             cx2_sup = self.supervision2(cx2)
             cx1_sup = torch.nn.functional.interpolate(cx1_sup, size=input_size, mode='bilinear')
@@ -144,13 +146,25 @@ class BiSeNet(torch.nn.Module):
 
         result = self.conv(result)
 
-        if self.training == True:
+        if self.training:
             return result, cx1_sup, cx2_sup
-        #转模型使用
-        result = torch.softmax(result,dim=1);
-        result = result.permute(0,2,3,1).contiguous()
-        # result = result.view(input_size[0]*input_size[1],3)
-        result = result.view(-1,3)
+        # 转模型使用
+        if self.mode=='deploy':
+            result = torch.softmax(result, dim=1);
+            result = result.permute(0, 2, 3, 1).contiguous()
+            # result = result.view(input_size[0]*input_size[1],3)
+            result = result.view(-1, self.num_classes)
+        else:
+            return result
+        # #转模型使用
+        # elif self.mode=='infer':
+        #     return result
+        # elif self.mode=='deploy':
+        #     result = torch.softmax(result,dim=1);
+        #     result = result.permute(0,2,3,1).contiguous()
+        #     # result = result.view(input_size[0]*input_size[1],3)
+        #     result = result.view(-1,self.num_classes)
+        #     #########################
         return result
 
 

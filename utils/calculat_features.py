@@ -4,7 +4,7 @@ import tqdm
 import numpy as np
 
 
-data_root = "/home/zhanggong/disk/Elements/ubuntu18.04/paoyuan/data/mask/"
+data_root = "../../data/mask/"
 
 
 mask_list = glob.glob(data_root+"*.png")
