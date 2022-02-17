@@ -111,6 +111,8 @@ class CSPDarkNet(nn.Module):
         self.conv3 = BasicConv(512, 512, kernel_size=3)
 
         self.num_features = 1
+
+        self.avgpool = nn.AdaptiveAvgPool2d(output_size=(1, 1))
         # 进行权值初始化
         for m in self.modules():
             if isinstance(m, nn.Conv2d):
@@ -136,8 +138,9 @@ class CSPDarkNet(nn.Module):
         # 13,13,512 -> 13,13,512
         x = self.conv3(x)
         feat2 = x
+        tail = self.avgpool(x)
 
-        return feat1, feat2
+        return feat1, feat2,tail
 
 
 def darknet53_tiny(pretrained, **kwargs):
@@ -149,8 +152,8 @@ def darknet53_tiny(pretrained, **kwargs):
             raise Exception("darknet request a pretrained path. got [{}]".format(pretrained))
     return model
 if __name__ == '__main__':
-    x = torch.randn((4, 3, 224, 224))
-    model = darknet53_tiny(pretrained=False)
+    x = torch.randn((4, 3, 360, 640)).cuda()
+    model = darknet53_tiny(pretrained=False).cuda()
     import time
     start = time.time()
     for i in range(100):

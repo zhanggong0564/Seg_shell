@@ -1,6 +1,7 @@
 from torchvision import models
 import torch
 from torch import nn
+from model.backbone.CSPdarknet53_tiny import darknet53_tiny
 
 
 
@@ -106,6 +107,7 @@ class BiSeNet(torch.nn.Module):
         super().__init__()
         self.saptial_path = Spatial_path()
         self.context_path = resnet18(pretrained=True)
+        # self.context_path = darknet53_tiny(pretrained=False)
 
         self.attention_refinement_module1 = AttentionRefinementModule(256, 256)
         self.attention_refinement_module2 = AttentionRefinementModule(512, 512)
@@ -124,7 +126,7 @@ class BiSeNet(torch.nn.Module):
         sp = self.saptial_path(input)
 
         sp_size = [int(sp.shape[2]),int(sp.shape[3])]
-        cx1, cx2, tail = self.context_path(input)
+        cx1, cx2, tail = self.context_path(input)#256,12,23 cx2:512,6,12 tail 512:
 
         cx1 = self.attention_refinement_module1(cx1)
         cx2 = self.attention_refinement_module2(cx2)
@@ -171,9 +173,10 @@ class BiSeNet(torch.nn.Module):
 if __name__ == '__main__':
     import torch as t
 
-    rgb = t.randn(1, 3, 180, 360)
+    rgb = t.randn(1, 3, 368, 640)
 
     net = BiSeNet(3).eval()
+
 
     out = net(rgb)
 

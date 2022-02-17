@@ -1,14 +1,39 @@
 # 炮弹分割项目
 
-这个项目用的网络结构是BiSeNetV1，backbone是resnet18；包含opencv,onnx，tensorrt（C++)部署代码。
+网络结构是resnet-unet，backbone是resnet18
+
+## loss 函数：交叉熵
+
+unet：0.556
+
+Unet++:0.60
+
+deeplabv3+:0.5716
+
+BiseNet:0.769
+
+## focal_loss
+
+BiseNet:0.816
+
+## lovasz_softmax
+
+​	0.828  class_acc:0.912
 
 在炮弹数据集中的miou map如下表：
 
-| 图片分辨率 | map  | miou | link |
-| :--------: | :--: | :--: | ---- |
-| (1280,720) |      |      |      |
-| (640,360)  |      |      |      |
-| (320,180)  |      |      |      |
+| 图片分辨率 | class_acc | miou  | link |
+| :--------: | :-------: | :---: | ---- |
+| (1280,720) |     x     |   x   | x    |
+| (640,368)  |    0.94   | 0.89  |      |
+| (320,176)  |           |       |      |
+
+
+
+
+
+这个项目用的网络结构是BiSeNetV1，backbone是resnet18；包含opencv,onnx，tensorrt（C++)部署代码。
+
 
 C++部署时间测试：
 

@@ -53,34 +53,48 @@ class ModelTrainer(object):
         model.train()  # 开启训练模式
         pbar = tqdm(enumerate(train_loader), total=len(train_loader))  # 构造进度条
         losses = []
+        pixel_acc=[]
+        class_acc = []
+        mIou = []
+        fwIou =[]
         ModelTrainer.train_metrics.reset()
         for step, (imgs, mask) in pbar:  # 遍历每个 batch
+            global_step = epoch*len(train_loader)+step
             optimizer.zero_grad()
             imgs = imgs.to(device).float()
             target = mask.to(device).long()
             # output = model(imgs)['out']
             output,cx1_sup,cx2_sup = model(imgs)
             # output = model(imgs)
-            out = F.log_softmax(output, dim=1)
-            loss0 = loss_fn(output, target)#这里是交叉熵损失函数 不是nll loss
-            loss1 = loss_fn(cx1_sup, target)
-            loss2 = loss_fn(cx2_sup, target)
+            # out = F.log_softmax(output, dim=1)
+            # out1 = F.log_softmax(cx1_sup,dim=1)
+            out2 = F.log_softmax(output,dim=1)
+
+            loss0 = loss_fn(F.softmax(output,dim=1), target)#这里是交叉熵损失函数 不是nll loss
+            loss1 = loss_fn(F.softmax(cx1_sup,dim=1), target)
+            loss2 = loss_fn(F.softmax(cx2_sup,dim=1), target)
             loss = loss0+loss1+loss2
+            # loss = loss0
             loss.backward()
             optimizer.step()
             losses.append(loss.item())
             #指标计算
-            pre_label = out.max(dim=1)[1].data.cpu().numpy()
+            pre_label = out2.max(dim=1)[1].data.cpu().numpy()
             true_label = target.data.cpu().numpy()
             ModelTrainer.train_metrics.update(true_label,pre_label)
             mec_dict = ModelTrainer.train_metrics.get_scores()
 
-            description = f'epoch {epoch} loss: {loss:.4f}'
+            pixel_acc.append(mec_dict[0]['pixel_acc'])
+            class_acc.append(mec_dict[0]['class_acc'])
+            mIou.append(mec_dict[0]['mIou'])
+            fwIou.append(mec_dict[0]['fwIou'])
+
+            description = f'epoch {epoch} loss: {np.mean(losses):.4f}'
             pbar.set_description(description)
-            pbar.set_postfix(pixel_acc=mec_dict[0]['pixel_acc'],
-                             class_acc = mec_dict[0]['class_acc'],
-                             mIou = mec_dict[0]['mIou'],
-                             fwIou = mec_dict[0]['fwIou']
+            pbar.set_postfix(pixel_acc=np.mean(pixel_acc),
+                             class_acc = np.mean(class_acc),
+                             mIou = np.mean(mIou),
+                             fwIou = np.mean(fwIou)
                              )
         scheduler.step()
         print("validation")
@@ -98,7 +112,8 @@ class ModelTrainer(object):
             image, target = image.to(DEVICE), target.long().to(DEVICE)
             # output = model(image)['out']
             output = model(image)
-            out = F.log_softmax(output, dim=1)
+            # output,_,_= model(image)
+            out = F.softmax(output, dim=1)
             pre_label = out.max(dim=1)[1].data.cpu().numpy()
             true_label = target.data.cpu().numpy()
             ModelTrainer.val_metrics.update(true_label, pre_label)

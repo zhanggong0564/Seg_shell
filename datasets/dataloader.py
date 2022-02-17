@@ -19,9 +19,9 @@ def prepare_dataloader(data_root,  bs, n_job,trn_transform=None,val_transform=No
     Returns:
         train_loader, val_loader , 训练集和验证集的数据生成器
     '''
-    #
-    imgs_list = list(sorted(os.listdir(os.path.join(data_root, 'imgs'))))
-    mask_list = [name.replace('.jpg', '.png') for name in imgs_list]
+
+    imgs_list = list(sorted(os.listdir(os.path.join(data_root, 'imgs'))))[:1000]
+    mask_list = [name.replace('.jpg', '.png') for name in imgs_list][:1000]
     # mask_list = list(sorted(os.listdir(os.path.join(data_root, 'mask'))))
     # mask_list = list(sorted(os.listdir(os.path.join(data_root, 'SegmentationClass'))))
     # imgs_list = [name.replace('png','jpg') for name in mask_list]

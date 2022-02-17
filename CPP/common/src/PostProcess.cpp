@@ -95,7 +95,7 @@ message PostProcess::get_arm_info(cv::Mat &mask){
             vector<cv::Point> approx;
             cv::approxPolyDP(new_contour[i],approx,epsilon, true);
             double scale = Rec[i].width/Rec[i].height;
-            if ( scale <= 1.26 and scale >= 0.95){
+            if ( scale <= 1.26 && scale >= 0.95){
                 upright.push_back(true);
             }else{
                 if (approx.size()>3){
@@ -150,7 +150,7 @@ bool PostProcess::filter_feature() {
         double scale_w_h =(double)rect.width/(double)rect.height;
 //        cout<<"w: "<<rect.width<<"h"<<rect.height<<endl;
 //        cout<<"scale_w_h: "<<scale_w_h<<"contours_area :"<<contours_area<<"length :"<<length<<endl;
-        if(scale_w_h>0.3 && scale_w_h<4.9 && 25 < contours_area && contours_area < 29556 &&length>19 && length<1344 ){
+        if(scale_w_h>0.25 && scale_w_h<4.9 && 1000< contours_area && contours_area < 29556 &&length>19 && length<1344 ){
             new_contour.push_back(m_contour[i]);
             Rec.push_back(rect);
             box.push_back(p);
@@ -172,6 +172,7 @@ void PostProcess::empty_info() {
     box.clear();
     m_contour.clear();
     centers.clear();
+    upright.clear();
 //    angs.clear();
 }
 vector<cv::Point2f> PostProcess::get_centers() {

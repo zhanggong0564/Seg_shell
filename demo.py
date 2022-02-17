@@ -6,7 +6,7 @@ from PostProcessing import PostProcess
 
 if __name__ == '__main__':
     cap = cv2.VideoCapture('/home/zhanggong/disk/Elements/data/paoyuan/source/data3.avi')
-    detector = Detect('/home/zhanggong/disk/Elements/ubuntu18.04/paoyuan/Bisnet_best_0.7724613163811815.pth')
+    detector = Detect('/home/zhanggong/disk/Extern/workspace/seg/Bisnet_best.pth')
     post_process = PostProcess()
     while True:
         import time

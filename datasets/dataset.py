@@ -53,8 +53,7 @@ class ShellDateset(Dataset):
         return img,mask.to(torch.long)
     def read_img(self,img_path):
         img = cv2.imread(img_path)
-        if img is None:
-            print()
+        assert img is not None
         img  = cv2.cvtColor(img,cv2.COLOR_BGR2RGB)
         return img
     def encode_labels(self):

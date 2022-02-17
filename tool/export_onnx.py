@@ -51,7 +51,7 @@ def transform_to_onnx(weight_file, batch_size, n_classes, IN_IMAGE_H, IN_IMAGE_W
 
     else:
         x = torch.randn((batch_size, 3, IN_IMAGE_H, IN_IMAGE_W), requires_grad=True)
-        onnx_file_name = "BisNet_shuff_{}_3_{}_{}_static.onnx".format(batch_size, IN_IMAGE_H, IN_IMAGE_W)
+        onnx_file_name = "BisNet_{}_3_{}_{}_static.onnx".format(batch_size, IN_IMAGE_H, IN_IMAGE_W)
         # Export the model
         print('Export the onnx model ...')
         torch.onnx.export(model,
@@ -67,7 +67,7 @@ def transform_to_onnx(weight_file, batch_size, n_classes, IN_IMAGE_H, IN_IMAGE_W
         return onnx_file_name
 def val_transfor():
     val_transform = A.Compose(
-        [A.Resize(360, 640), A.Normalize(mean=(0.485, 0.456, 0.406), std=(0.229, 0.224, 0.225))]
+        [A.Resize(368, 640), A.Normalize(mean=(0.485, 0.456, 0.406), std=(0.229, 0.224, 0.225))]
     )
     return val_transform
 
@@ -101,6 +101,6 @@ def main(weight_file, batch_size, n_classes, IN_IMAGE_H, IN_IMAGE_W):
 
 
 if __name__ == '__main__':
-    main('../../Bisnet_best.pth',1,4,360,640)
+    main('/home/zhanggong/disk/Extern/workspace/seg/Bisnet_best.pth',1,4,368,640)
     # (1280, 720)
     #640,360

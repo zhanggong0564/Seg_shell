@@ -15,7 +15,7 @@ using namespace std;
 
 int main(){
     int width= 640;
-    int height= 360;
+    int height= 368;
 //    string model_name = "/home/zhanggong/disk/Elements/ubuntu18.04/paoyuan/seg_src/tool/FCN8S 1_3_180_360_static.onnx";
 //    string model_name = "/home/zhanggong/disk/Elements/ubuntu18.04/paoyuan/seg_src/tool/export_360.trt";
     string model_name = "/home/zhanggong/disk/Elements/ubuntu18.04/paoyuan/seg_src/tool/new_export.trt";
@@ -39,7 +39,7 @@ int main(){
 //        clock_t start = clock();
 
 //        video.get_frame(frame);
-        cv::Mat frame = cv::imread("/home/zhanggong/disk/Elements/ubuntu18.04/paoyuan/paoyuan/shell/6.jpg");
+        cv::Mat frame = cv::imread("/home/zhanggong/Desktop/image.jpg");
         double time0 = static_cast<double>(cv::getTickCount());
         Det.Detecting(frame,masks);//检测时间0.006秒 6ms
 

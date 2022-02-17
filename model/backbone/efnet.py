@@ -1,6 +1,7 @@
-# from efficientnet_pytorch import EfficientNet
+from efficientnet_pytorch import EfficientNet
 import torch.nn as nn
 import torch
+import time
 
 
 
@@ -50,7 +51,13 @@ class Efnet(nn.Module):
         return x1,x2,x3
 
 if __name__ == '__main__':
-    x = torch.randn((4,3,224,224))
-    model = Efnet()
-    y1,y2,y3 = model(x)
-    print(y1.shape,y2.shape,y3.shape)
+    x = torch.randn((4,3,224,224)).cuda()
+    model = Efnet().cuda()
+    start = time.time()
+    for i in range(100):
+        y = model(x)
+    end = time.time()
+    print(end - start)  # 4.68
+
+    # y1,y2,y3 = model(x)
+    # print(y1.shape,y2.shape,y3.shape)

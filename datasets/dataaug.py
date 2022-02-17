@@ -2,6 +2,7 @@ from albumentations.pytorch import ToTensorV2
 import albumentations as A
 import numpy as np
 import math
+import random
 
 
 def train_transfor(image_size):
@@ -25,7 +26,7 @@ def train_transfor(image_size):
     return val_transform
 def val_transfor():
     val_transform = A.Compose(
-        [A.Resize(360,640)]
+        [A.Resize(368,640)]
     )
     return val_transform
 
@@ -68,6 +69,32 @@ class RandomResizedCrop(object):
             lb=lb[sh:sh+crop_h, sw:sw+crop_w].copy()
         )
 
+class ScaleAug(object):
+    def __call__(self, sample):
+        image, mask = sample
+        scale = random.uniform(0.7, 1.5)
+        h, w, _ = image.shape
+        aug_image = image.copy()
+        aug_mask = mask.copy()
+        aug_image = cv2.resize(aug_image, (int (scale * w), int (scale * h)))
+        aug_mask = cv2.resize(aug_mask, (int (scale * w), int (scale * h)))
+        if (scale < 1.0):
+            new_h, new_w, _ = aug_image.shape
+            pre_h_pad = int((h - new_h) / 2)
+            pre_w_pad = int((w - new_w) / 2)
+            pad_list = [[pre_h_pad, h - new_h - pre_h_pad], [pre_w_pad, w - new_w - pre_w_pad], [0, 0]]
+            aug_image = np.pad(aug_image, pad_list, mode="constant")
+            aug_mask = np.pad(aug_mask, pad_list[:2], mode="constant")
+        if (scale > 1.0):
+            new_h, new_w, _ = aug_image.shape
+            pre_h_crop = int ((new_h - h) / 2)
+            pre_w_crop = int ((new_w - w) / 2)
+            post_h_crop = h + pre_h_crop
+            post_w_crop = w + pre_w_crop
+            aug_image = aug_image[pre_h_crop:post_h_crop, pre_w_crop:post_w_crop]
+            aug_mask = aug_mask[pre_h_crop:post_h_crop, pre_w_crop:post_w_crop]
+        return aug_image, aug_mask
+
 if __name__ == '__main__':
     import cv2
     import glob
@@ -78,11 +105,17 @@ if __name__ == '__main__':
     for image_path in zip(image_list,mask_list):
         image = cv2.imread(image_path[0])
         mask = cv2.imread(image_path[1],1)
+        print(mask.shape)
+
+        mask = np.pad(mask,[[100,100],[100,100],[0,0]],mode="constant")
+        print(mask.shape)
         # ROI = image[120:,40:1240,:]
         # ROI = cv2.resize(ROI,(600,300))
-        im_dict = {"im":image,"lb":mask}
-        m = crp(im_dict)
-        cv2.imshow("tets",m["im"])
-        cv2.imshow("tets", m["lb"])
+        # im_dict = {"im":image,"lb":mask}
+        # m = crp(im_dict)
+        # cv2.imshow("tets",m["im"])
+        # cv2.imshow("tets", m["lb"])
+        cv2.imshow('te',mask)
         cv2.waitKey()
         cv2.destroyAllWindows()
+
